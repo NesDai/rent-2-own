@@ -6,7 +6,7 @@ Rent-2-Own is a cutting-edge Web3 marketplace that empowers users to transform t
 while buyers enjoy a rent-to-own experience, gradually earning full ownership over time. Powered by smart contracts, the platform guarantees transparency, trust, and fairness, ensuring every transaction 
 is secure and verifiable on-chain.
 
-Hosted Link: 
+Hosted Link: https://github.com/NesDai/rent-2-own(https://github.com/NesDai/rent-2-own)
 
 ## Getting Started
 
