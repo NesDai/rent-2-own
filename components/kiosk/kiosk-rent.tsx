@@ -5,6 +5,9 @@ import { useKioskClient } from "../../providers/KioskProvider";
 import { useState } from "react";
 import { Flex, Heading, Text, TextField, Button } from "@radix-ui/themes";
 
+// This component allows users to rent an NFT from a kiosk
+// It requires the user to be connected, and it handles the rental process
+// It takes the RentalState ID to get the Kiosk item details
 export default function RentItem() {
   const account = useCurrentAccount();
   const kioskClient = useKioskClient();

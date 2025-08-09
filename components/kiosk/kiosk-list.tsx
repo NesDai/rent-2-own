@@ -3,6 +3,8 @@ import { useCurrentAccount, useSuiClient } from "@mysten/dapp-kit";
 import { useKioskClient } from "../../providers/KioskProvider";
 import { useState, useEffect } from "react";
 
+// This component lists all kiosks owned by the current user
+// It fetches the kiosks, their items, and any rental states associated with them
 export default function KioskList() {
   const account = useCurrentAccount();
   const kioskClient = useKioskClient();

@@ -17,6 +17,9 @@ import {
   Select,
 } from "@radix-ui/themes";
 
+// This component allows users to list their NFTs for rent in the kiosk
+// It fetches the user's NFTs, allows them to select one, and set a price and daily rent
+// It handles both cases: listing NFTs from the wallet or from the kiosk directly
 export default function ListNFTForRent() {
   const account = useCurrentAccount();
   const kioskClient = useKioskClient();
@@ -67,6 +70,7 @@ export default function ListNFTForRent() {
     { enabled: !!account }
   );
 
+  // Filter NFTs from the fetched objects
   useEffect(() => {
     if (objects) {
       const nftTypes = ["0x2::devnet_nft::DevNetNFT"];
@@ -80,6 +84,8 @@ export default function ListNFTForRent() {
     }
   }, [objects]);
 
+  // Handle listing NFT for rent
+  // This function will handle both cases: listing from wallet or from kiosk
   const handleListForRent = async () => {
     if (!account || !kioskCap || !selectedNFT) {
       alert(

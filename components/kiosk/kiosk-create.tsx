@@ -7,6 +7,10 @@ import { KioskTransaction } from "@mysten/kiosk";
 import { Transaction } from "@mysten/sui/transactions";
 import { useKioskClient } from "../../providers/KioskProvider"; // Adjust path as necessary
 
+// This component allows users to create a new kiosk
+// It checks if the user is connected, creates a new kiosk transaction,
+// and transfers the KioskOwnerCap to the user's address
+// It handles success and error cases with appropriate alerts
 export default function CreateKiosk() {
   const account = useCurrentAccount();
   const kioskClient = useKioskClient();
