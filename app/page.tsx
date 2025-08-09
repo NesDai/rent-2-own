@@ -10,12 +10,14 @@ import ListNFTForRent from "@/components/kiosk/kiosk-create-rental"
 import CreateKiosk from "@/components/kiosk/kiosk-create"
 import RentItem from "@/components/kiosk/kiosk-rent"
 import KioskList from "@/components/kiosk/kiosk-list"
+import { MintButton } from "@/components/kiosk/mint-random-nft"
 
 export default function Race2OwnLandingPage() {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       <div className="relative z-10">
         <ConnectButton></ConnectButton>
+        <MintButton></MintButton>
         <ListNFTForRent></ListNFTForRent>
         <CreateKiosk></CreateKiosk>
         <RentItem></RentItem>
