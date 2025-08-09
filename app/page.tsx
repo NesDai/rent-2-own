@@ -17,7 +17,7 @@ export default function Race2OwnLandingPage() {
     <div className="min-h-screen bg-background relative overflow-hidden">
       <div className="relative z-10">
         <ConnectButton></ConnectButton>
-        <MintButton></MintButton>
+        <MintButton></MintButton>a
         <ListNFTForRent></ListNFTForRent>
         <CreateKiosk></CreateKiosk>
         <RentItem></RentItem>
