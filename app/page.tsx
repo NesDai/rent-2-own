@@ -17,6 +17,7 @@ export default function Race2OwnLandingPage() {
     <div className="min-h-screen bg-background relative overflow-hidden">
       <div className="relative z-10">
         <MintButton></MintButton>
+        <CreateKiosk></CreateKiosk>
         {/* Hero Section - No animation wrapper needed as it has its own */}
         <EnhancedHeroSection />
         {/* Animated Sections */}
