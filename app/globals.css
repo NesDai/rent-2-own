@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Web3 Dark Theme Colors */
+    --background: 222 84% 5%; /* Deep Navy #0F172A */
+    --foreground: 210 40% 98%; /* White #FFFFFF */
+
+    --muted: 215 28% 17%; /* Slate #1E293B */
+    --muted-foreground: 217 19% 78%; /* Cool Gray #CBD5E1 */
+
+    --card: 222 84% 5% / 0.8;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 84% 5%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Primary - SUI Blue */
+    --primary: 217 100% 64%; /* #4B8CFF */
+    --primary-foreground: 210 40% 98%; /* White */
+    --primary-dark: 217 100% 54%; /* Darker SUI Blue */
+    --primary-light: 217 100% 74%; /* Lighter SUI Blue */
+
+    /* Secondary - Neon Teal */
+    --secondary: 174 100% 61%; /* #38FDD0 */
+    --secondary-foreground: 222 84% 5%; /* Deep Navy */
+
+    --accent: 215 28% 17%; /* Slate */
+    --accent-foreground: 210 40% 98%;
+
+    --border: 217 19% 78% / 0.1; /* Cool Gray with opacity */
+    --input: 217 19% 78% / 0.1;
+    --ring: 217 100% 64%; /* SUI Blue */
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom Web3 Animations */
+@keyframes particle-float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(120deg);
+  }
+  66% {
+    transform: translateY(10px) rotate(240deg);
+  }
+}
+
+@keyframes neon-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px #38fdd0, 0 0 10px #38fdd0, 0 0 15px #38fdd0;
+  }
+  50% {
+    box-shadow: 0 0 10px #38fdd0, 0 0 20px #38fdd0, 0 0 30px #38fdd0;
+  }
+}
+
+.particle-bg {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #38fdd0;
+  border-radius: 50%;
+  animation: particle-float 6s ease-in-out infinite;
+}
+
+.neon-glow {
+  animation: neon-glow 2s ease-in-out infinite;
+}
