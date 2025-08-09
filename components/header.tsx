@@ -73,7 +73,7 @@ export function Header() {
         </div>
         <div className="flex items-center gap-4">
           <div className="hidden md:block">
-            <WalletButton />
+            <ConnectButton />
           </div>
           <Sheet>
             <SheetTrigger asChild className="md:hidden">
@@ -99,10 +99,6 @@ export function Header() {
                     {item.name}
                   </Link>
                 ))}
-                <div className="mt-4">
-                  <ConnectButton></ConnectButton>
-                  {/* <WalletButton size="default" className="w-full" /> */}
-                </div>
               </nav>
             </SheetContent>
           </Sheet>

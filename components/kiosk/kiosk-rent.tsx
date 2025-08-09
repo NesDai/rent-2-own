@@ -4,6 +4,12 @@ import { Transaction } from "@mysten/sui/transactions";
 import { useKioskClient } from "../../providers/KioskProvider";
 import { useState } from "react";
 import { Flex, Heading, Text, TextField, Button } from "@radix-ui/themes";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
+import { Slider } from "@/components/ui/slider";
+import { DollarSign, Calendar, Info, Zap } from "lucide-react";
+
 
 // This component allows users to rent an NFT from a kiosk
 // It requires the user to be connected, and it handles the rental process
@@ -13,8 +19,8 @@ export default function RentItem() {
   const kioskClient = useKioskClient();
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
   const [rentalStateId, setRentalStateId] = useState("");
-  const [durationDays, setDurationDays] = useState("");
-  const [amount, setAmount] = useState("");
+  const [durationDays, setDurationDays] = useState("1");
+  const [amount, setAmount] = useState("0");
   const [loading, setLoading] = useState(false);
 
   const handleRentItem = async () => {
@@ -104,11 +110,13 @@ export default function RentItem() {
     <Flex direction="column" gap="4" my="4">
       <Heading size="4">Rent an NFT</Heading>
       <TextField.Root
+        size="3"
         placeholder="Rental State ID"
         value={rentalStateId}
         onChange={(e) => setRentalStateId(e.target.value)}
+        className="bg-white py-2 rounded-s"
       />
-      <TextField.Root
+      {/* <TextField.Root
         placeholder="Duration (days)"
         value={durationDays}
         onChange={(e) => setDurationDays(e.target.value)}
@@ -119,14 +127,51 @@ export default function RentItem() {
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
         type="number"
-      />
-      <Button
-        onClick={handleRentItem}
-        disabled={!account || !rentalStateId || !durationDays || !amount || loading}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
-      >
-        {loading ? "Renting..." : "Rent Item"}
-      </Button>
+      /> */}
+
+      <div className="space-y-2">
+        <Label htmlFor="duration" className="text-base text-foreground">
+          Select Rental Duration (Days)
+        </Label>
+        <Input
+          id="duration"
+          type="number"
+          min="1"
+          max="30"
+          value={durationDays}
+          onChange={(e) => setDurationDays(e.target.value)}
+          className="w-full text-foreground bg-background/50 border-border"
+        />
+        <p className="text-sm text-muted-foreground">
+          Duration can be between 1 and 30 days.
+        </p>
+      </div>
+      <br></br>
+      <div className="space-y-2">
+        <Label htmlFor="amount" className="text-base text-foreground">
+          Put in the amount (SUI)
+        </Label>
+        <Input
+          id="amount"
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="w-full text-foreground bg-background/50 border-border"
+        />
+      </div>
+      <div className="py-4"></div>
+      <div className="flex flex-row-reverse">
+        <Button
+          onClick={handleRentItem}
+          disabled={
+            !account || !rentalStateId || !durationDays || !amount || loading
+          }
+          className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full font-semibold flex items-center gap-2 animate-glow-pulse px-3 py-2"
+        >
+          <Zap className="w-4 h-4" />
+          {loading ? "Renting..." : "Rent Item"}
+        </Button>
+      </div>
     </Flex>
   );
 }

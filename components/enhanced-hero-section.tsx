@@ -194,7 +194,7 @@ export function EnhancedHeroSection() {
           >
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span>Live on SUI Mainnet</span>
+              <span>Live on SUI Testnet</span>
             </div>
           </motion.div>
         </motion.div>

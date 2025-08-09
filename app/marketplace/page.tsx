@@ -7,85 +7,21 @@ import { ChevronDown } from 'lucide-react'
 import { motion } from "framer-motion"
 import { NFTCard } from "@/components/nft-card" // Import the new NFTCard
 import { RentModal } from "@/components/rent-modal" // Import the new RentModal
-
-const mockNFTs = [
-{
-  id: 1,
-  name: "Cyber Ape #001",
-  image: "/cosmic-warrior-nft.png",
-  priceToOwn: "100 USDT",
-  minRent: "1.5 USDT/day",
-  currentProgress: 60,
-  timeLeft: "3d 14h",
-  competitors: 4,
-  category: "Gaming",
-},
-{
-  id: 2,
-  name: "Meta Helmet #045",
-  image: "/cyberpunk-avatar-nft.png",
-  priceToOwn: "120 USDT",
-  minRent: "2.0 USDT/day",
-  currentProgress: 35,
-  timeLeft: "5d 8h",
-  competitors: 2,
-  category: "Art",
-},
-{
-  id: 3,
-  name: "Digital Dreamscape",
-  image: "/digital-dreamscape.png",
-  priceToOwn: "75 USDT",
-  minRent: "1.0 USDT/day",
-  currentProgress: 82,
-  timeLeft: "1d 12h",
-  competitors: 6,
-  category: "Art",
-},
-{
-  id: 4,
-  name: "Quantum Crystal",
-  image: "/quantum-crystal-nft.png",
-  priceToOwn: "150 USDT",
-  minRent: "2.5 USDT/day",
-  currentProgress: 25,
-  timeLeft: "6d 20h",
-  competitors: 3,
-  category: "Collectible",
-},
-{
-  id: 5,
-  name: "Space Explorer",
-  image: "/space-explorer-nft.png",
-  priceToOwn: "90 USDT",
-  minRent: "1.8 USDT/day",
-  currentProgress: 67,
-  timeLeft: "2d 16h",
-  competitors: 5,
-  category: "Gaming",
-},
-{
-  id: 6,
-  name: "Neon Warrior",
-  image: "/cosmic-warrior-nft.png",
-  priceToOwn: "110 USDT",
-  minRent: "1.7 USDT/day",
-  currentProgress: 43,
-  timeLeft: "4d 6h",
-  competitors: 3,
-  category: "Gaming",
-},
-]
+import { ListModal } from "@/components/create-listing-modal"
+import { mockNFTs } from "@/utils/mock_nfts" // Import the mock NFTs
 
 const categories = ["All", "Gaming", "Art", "Avatar", "Collectible"]
 
 export default function MarketplacePage() {
+const [nfts, setNfts] = useState(mockNFTs);
 const [filter, setFilter] = useState("All")
 const [sortBy, setSortBy] = useState("featured")
-const [selectedNft, setSelectedNft] = useState<typeof mockNFTs[0] | null>(null)
+const [selectedNft, setSelectedNft] = useState<typeof nfts[0] | null>(null)
 const [isRentModalOpen, setIsRentModalOpen] = useState(false)
+const [isCreateListingModalOpen, setIsCreateListingModalOpen] = useState(false)
 
-const filteredNFTs = filter === "All" ? mockNFTs : mockNFTs.filter((nft) => nft.category === filter)
+const filteredNFTs =
+  filter === "All" ? nfts : nfts.filter((nft) => nft.category === filter);
 
 const sortedNFTs = [...filteredNFTs].sort((a, b) => {
   switch (sortBy) {
@@ -104,7 +40,7 @@ const sortedNFTs = [...filteredNFTs].sort((a, b) => {
   }
 })
 
-const handleRentNowClick = (nft: typeof mockNFTs[0]) => {
+const handleRentNowClick = (nft: typeof nfts[0]) => {
   setSelectedNft(nft)
   setIsRentModalOpen(true)
 }
@@ -138,7 +74,8 @@ return (
               </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Start your journey to NFT ownership. Rent, compete, and win your favorite digital assets.
+              Start your journey to NFT ownership. Rent, compete, and win your
+              favorite digital assets.
             </p>
           </motion.div>
 
@@ -165,8 +102,7 @@ return (
                   {category}
                 </Button>
               ))}
-            </div>
-
+            </div>{" "}
             {/* Sort Dropdown */}
             <div className="relative">
               <select
@@ -183,6 +119,11 @@ return (
               <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
             </div>
           </motion.div>
+          <Button
+            onClick={() => setIsCreateListingModalOpen(true)}
+          >
+            Add Listing
+            </Button>
         </div>
       </section>
 
@@ -226,6 +167,15 @@ return (
       onClose={() => setIsRentModalOpen(false)}
       nft={selectedNft}
     />
+
+    <ListModal
+      isOpen={isCreateListingModalOpen}
+      onClose={() => setIsCreateListingModalOpen(false)}
+      onCreateListing={(newNft) => {
+        setNfts((prev) => [...prev, newNft]);
+        setIsCreateListingModalOpen(false);
+      }}
+    />
   </div>
-)
+);
 }

@@ -3,7 +3,8 @@
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from 'lucide-react'
-import { WalletButton } from "./wallet-button"
+import Link from "next/link";
+
 
 export function CTASection() {
   return (
@@ -21,8 +22,18 @@ export function CTASection() {
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
-            <pattern id="ctaGrid" width="60" height="60" patternUnits="userSpaceOnUse">
-              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1" />
+            <pattern
+              id="ctaGrid"
+              width="60"
+              height="60"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 60 0 L 0 0 0 60"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+              />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#ctaGrid)" />
@@ -40,10 +51,13 @@ export function CTASection() {
           <div className="space-y-4">
             <h2 className="text-4xl md:text-6xl font-bold text-foreground">
               Ready to{" "}
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Race?</span>
+              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                Race?
+              </span>
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Join the future of NFT ownership. Start competing for your favorite digital assets today.
+              Join the future of NFT ownership. Start competing for your
+              favorite digital assets today.
             </p>
           </div>
 
@@ -54,14 +68,12 @@ export function CTASection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-4"
           >
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-10 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-primary/25 transition-all duration-300 flex items-center gap-3 group">
-              Browse NFTs
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <WalletButton 
-              size="default" 
-              className="border-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 neon-glow bg-transparent"
-            />
+            <Link href="/marketplace">
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-10 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-primary/25 transition-all duration-300 flex items-center gap-3 group">
+                Browse NFTs Now
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
           </motion.div>
 
           {/* Stats */}
@@ -73,20 +85,26 @@ export function CTASection() {
             className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12 border-t border-border/50"
           >
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">500+</div>
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                500+
+              </div>
               <div className="text-muted-foreground">Active NFTs</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-secondary mb-2">1.2K+</div>
+              <div className="text-3xl md:text-4xl font-bold text-secondary mb-2">
+                1.2K+
+              </div>
               <div className="text-muted-foreground">Competitors</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">50K+</div>
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                50K+
+              </div>
               <div className="text-muted-foreground">SUI Volume</div>
             </div>
           </motion.div>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
