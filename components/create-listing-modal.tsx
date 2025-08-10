@@ -90,38 +90,66 @@ export function ListModal({ isOpen, onClose, onCreateListing }: ListModalProps) 
   }, [objects]);
 
   const addNFTToLS = async (nft: any, digest: string) => {
-    // Fetch the NFT Listings from localstorage NFTLISTINGS then append into it then save
     try {
-        const result = await getRentalStateObject(suiClient, digest);
-        // Get existing listings from localStorage
-        const existingListings = localStorage.getItem("NFTLISTINGS");
-        let listings = existingListings ? JSON.parse(existingListings) : [];
+      console.log("NFT data", nft);
+      console.log("digest", digest);
 
-        // Create the listing object
-        const nftData = nft.data?.content?.fields || {};
-        const displayData = nft.data?.display?.data || {};
+      // Add retry logic with exponential backoff
+      const getRentalStateWithRetry = async (
+        maxRetries = 5,
+        initialDelay = 1000
+      ) => {
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+          try {
+            console.log(`Attempt ${attempt} to fetch rental state object...`);
+            const result = await getRentalStateObject(suiClient, digest);
+            return result;
+          } catch (error) {
+            console.warn(`Attempt ${attempt} failed:`, error);
 
-        const newListing = {
-          id: nft.data?.objectId,
-          name: displayData.name || nftData.name || "Unnamed NFT",
-          description: displayData.description || nftData.description || "",
-          image: nftData.url || displayData.image_url || "",
-          type: nft.data?.type || "",
-          priceToOwn: parseFloat(price) + " SUI",
-          minRent: parseFloat(dailyRent) + " SUI/day",
-          owner: account?.address,
-          listedAt: new Date().toISOString(),
-          status: "active", // active, rented, cancelled
-          rentalStateId: result,
-          currentProgress : '0',
-        };
+            if (attempt === maxRetries) {
+              throw new Error(
+                `Failed to fetch rental state object after ${maxRetries} attempts`
+              );
+            }
 
-        onCreateListing?.(newListing); // Call the callback if provided
-        
-        } catch (error) {
-        console.error("Error saving NFT to localStorage:", error);
+            // Wait before retrying with exponential backoff
+            const delay = initialDelay * Math.pow(2, attempt - 1);
+            console.log(`Waiting ${delay}ms before retry...`);
+            await new Promise((resolve) => setTimeout(resolve, delay));
+          }
+        }
+      };
+
+      const result = await getRentalStateWithRetry();
+      console.log("result", result);
+
+      // Create the listing object
+      const nftData = nft.data?.content?.fields || {};
+      const displayData = nft.data?.display?.data || {};
+
+      const newListing = {
+        id: nft.data?.objectId,
+        name: displayData.name || nftData.name || "Unnamed NFT",
+        description: displayData.description || nftData.description || "",
+        image: nftData.url || displayData.image_url || "",
+        type: nft.data?.type || "",
+        priceToOwn: parseFloat(price) + " SUI",
+        minRent: parseFloat(dailyRent) + " SUI/day",
+        owner: account?.address,
+        listedAt: new Date().toISOString(),
+        status: "active",
+        rentalStateId: result,
+        currentProgress: "0",
+      };
+
+      onCreateListing?.(newListing);
+    } catch (error) {
+      console.error("Error:", error);
+      // Optionally show user-friendly error
+      alert(`Failed to complete listing: ${error}`);
     }
-  }
+  };
 
   // Handle listing NFT for rent
   // This function will handle both cases: listing from wallet or from kiosk
@@ -216,11 +244,13 @@ export function ListModal({ isOpen, onClose, onCreateListing }: ListModalProps) 
           transaction: tx,
         },
         {
-          onSuccess: (result) => {
-            // console.log("NFT listed for rent:", result);
+          onSuccess: async (result) => {
+            console.log("NFT listed for rent:", result);
 
             // alert(`NFT listed for rent successfully! Digest: ${result.digest}`);
-            addNFTToLS(nft, result.digest); // Add NFT to local storage
+            await 1000
+            await addNFTToLS(nft, result.digest); // Add NFT to storge
+            
             setSelectedNFT("");
             setPrice("");
             setDailyRent("");

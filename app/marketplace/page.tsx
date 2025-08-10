@@ -9,6 +9,8 @@ import { NFTCard } from "@/components/nft-card" // Import the new NFTCard
 import { RentModal } from "@/components/rent-modal" // Import the new RentModal
 import { ListModal } from "@/components/create-listing-modal"
 import { mockNFTs } from "@/utils/mock_nfts" // Import the mock NFTs
+import { getRentalStateObject } from "@/utils/suiHelpers"
+import { useSuiClient } from "@mysten/dapp-kit"
 
 const categories = ["All", "Gaming", "Art", "Avatar", "Collectible"]
 
@@ -45,11 +47,19 @@ const handleRentNowClick = (nft: typeof nfts[0]) => {
   setIsRentModalOpen(true)
 }
 
+  const suiClient = useSuiClient();
+
+const handleTB = async () => {
+  const tx = "Bfaf9hW7SPzZvbYhM2b45FVrjTVD17cXVn4DPmrqXREs"
+  const result = await getRentalStateObject(suiClient, tx);
+  console.log(result)
+}
+
 return (
   <div className="min-h-screen bg-background">
     {/* Persistent Header */}
     <Header />
-
+    <Button onClick={() => {handleTB()}}>HELLO TEST GET TB</Button>
     {/* Main Content */}
     <main className="pt-20 pb-16">
       {/* Hero Section */}

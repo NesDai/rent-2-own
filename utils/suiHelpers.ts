@@ -1,4 +1,6 @@
-export async function getRentalStateObject(suiClient: any, digest: string) {
+import { SuiClient } from "@mysten/sui/client";
+
+export async function getRentalStateObject(suiClient: SuiClient, digest: string) {
   try {
     const txDetails = await suiClient.getTransactionBlock({
       digest: digest,

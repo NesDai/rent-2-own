@@ -11,7 +11,7 @@ export function MintButton() {
     tx.moveCall({
       target: `0xfa675f28f9fa5560959a2349167c2e864d1c6917da5aff6f21f8e70809d564f2::nft_basic::mint_nft`,
       arguments: [
-        tx.pure.string("APPLE NFT #6"),
+        tx.pure.string("APPLE NFT #7"),
         tx.pure.string("This is a limited edition APPLE NFT."),
         tx.pure.string(
           "https://healthjade.com/wp-content/uploads/2017/10/apple-fruit.jpg"
